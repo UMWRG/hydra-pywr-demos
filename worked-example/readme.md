@@ -23,8 +23,6 @@ to use powershell or other.
 Get Hydra and some dependencies. This example uses 'pipenv' to install dependecnies
 instead of using 'pip'. This allows us to use avoid intruding on your computer's local python installation.
 
-Notice we call 'python' instead of 'python' below ensures the correct libraries are used.
-
 ```bash
     >>> pip install pipenv
     
