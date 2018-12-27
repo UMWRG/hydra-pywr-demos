@@ -1,0 +1,42 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+cython = "*"
+packaging = "*"
+numpy = "*"
+pywr = {git = "https://github.com/pywr/pywr.git", ref = "schema2"}
+hydra_base = {git = "https://github.com/hydraplatform/hydra-base.git", ref = "master"}
+hydra_client = {git = "https://github.com/hydraplatform/hydra-client-python.git",ref = "master"}
+hydra_pywr_common = {git = "https://github.com/pywr/hydra-pywr-common.git", ref = "master"}
+hydra_pywr = {git = "https://github.com/pywr/hydra-pywr.git", ref = "master"}
+click = "*"
+marshmallow = ">2"
+beaker = "*"
+pandas = "*"
+networkx = "*"
+tables = "*"
+xlrd = "*"
+scipy = "*"
+future = "*"
+matplotlib = "<3"
+sqlalchemy = "*"
+psycopg2-binary = "*"
+bcrypt = "*"
+mysql-connector-python = "*"
+python-dateutil = "*"
+cheroot = "*"
+lxml = "*"
+requests = "*"
+suds-jurko = "*"
+
+[dev-packages]
+pytest = "*"
+
+[requires]
+python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true
