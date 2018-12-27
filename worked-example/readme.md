@@ -67,7 +67,7 @@ Using the pywr app, upload the network to Hydra. Choose one of the models to run
 Run the model
 
 ```bash
-    >>> python -it hydra-pywr run  --network-id=<network_id> --scenario-id=<scenario_id>
+    >>> hydra-pywr run  --network-id=<network_id> --scenario-id=<scenario_id>
 ```
 
 # Step 6
