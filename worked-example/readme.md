@@ -23,8 +23,6 @@ to use powershell or other.
 Get Hydra and some dependencies. This example uses 'pipenv' to install dependecnies
 instead of using 'pip'. This allows us to use avoid intruding on your computer's local python installation.
 
-Notice we call 'python' instead of 'python' below ensures the correct libraries are used.
-
 ```bash
     >>> pip install pipenv
     
@@ -58,7 +56,7 @@ In order to import a Pywr model to Hydra first a template must be registered wit
 Using the pywr app, upload the network to Hydra. Choose one of the models to run. This uses the simplest one, 'simple1.json'
 
 ```bash
-    >>> python hydra-pywr import ../simple1/simple1.json --project-id=<project_id>
+    >>> python hydra-pywr import ../models/simple1/simple1.json --project-id=<project_id>
     Network <network_id> created 
 
     >>> python get_network_details.py --network-id=<network_id>
