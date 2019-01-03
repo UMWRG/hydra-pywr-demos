@@ -96,7 +96,7 @@ Posing as the shared user, inspect results (in this case, simulated_volume) with
 ```
 # Step 9
 Posing as the shared user, try to access the cost values. Notice that an error occurs, as user2 does
-not have permission to view the value of the cost. *This means that user 2 will be unable to run the model, as the cost value will not be exported.*
+not have permission to view the value of the cost. *This means that user 2 may be unable to run the model, or the model may produce inconsistent results as the cost value will not be exported.*
 
 ```bash
     >>> python plot_results.py --scenario-id=<scenario_id> --attribute-name=cost
