@@ -194,7 +194,7 @@
         },
         "hydra-base": {
             "git": "https://github.com/hydraplatform/hydra-base.git",
-            "ref": "75e100c7104fbcb4353b99cc4c741aecbe7acaa4"
+            "ref": "3bb150ce597a7c1c5c094a2ebb1b1503ecab9276"
         },
         "hydra-client": {
             "git": "https://github.com/hydraplatform/hydra-client-python.git",

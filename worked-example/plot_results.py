@@ -1,5 +1,5 @@
 import hydra_functions as hf
-
+import pandas as pd
 import click
 
 plt = None
@@ -23,7 +23,7 @@ def plot_results(scenario_id, attribute_name, username, password):
         return
 
     #Connect to hydra
-    conn = hf.connect()
+    conn = hf.connect(username, password)
     
     #make a lookup of the ID of all attributes to their name so we can look it up
     all_attributes = conn.get_attributes()
@@ -39,13 +39,18 @@ def plot_results(scenario_id, attribute_name, username, password):
         for rs in scenario.resourcescenarios:
             #Check the attribute map created above to see if it's the right attribute.
             if attribute_id_name_map[rs.resourceattr.attr_id].lower() == attribute_name.lower():
+                if rs.dataset.value is None:
+                    raise Exception("Unable to view value for dataset {0}".format(rs.dataset.name))
                 datasets_to_plot.append(rs.dataset.value)
                 
     except Exception as e:
-        print("An error occurred retrieving scenario {0}".format( scenario_id ))
+        print("An error occurred retrieving scenario {0}. Reason: {1}".format( scenario_id, e ))
         return
+   
+    for d in datasets_to_plot:
+        df = pd.read_json(d)
+        plt.plot(df.index, df.values)
 
-    plt.plot([1, 2, 3, 4], [1, 4, 9, 16])
     plt.show()
 
 

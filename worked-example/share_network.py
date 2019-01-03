@@ -4,6 +4,8 @@ from hydra_base.lib.objects import Dataset
 
 import click
 
+import logging
+
 @click.command()
 @click.option('--network-id', '-n', help='Network ID')
 @click.option('--recipient-username', '-u', help='The user ID of the receiving user.')
@@ -14,7 +16,7 @@ def add_user(network_id, recipient_username, hidden_attribute):
     """
 
     #Connect to hydra
-    conn = hf.connect()
+    conn = hf.connect(username=None, password=None)
     
     #make a lookup of the ID of all attributes to their name so we can look it up
     all_attributes = conn.get_attributes()
@@ -30,10 +32,11 @@ def add_user(network_id, recipient_username, hidden_attribute):
         for rs in network.scenarios[0].resourcescenarios:
             if attribute_id_name_map[rs.attr_id].lower() == hidden_attribute.lower():
                 # Hide the dataset. 
-                conn.hide_dataset(dataset_id=rs.dataset.id) 
+                conn.hide_dataset(rs.dataset.id, [], read='N', write='N', share='N') 
                 hidden_count = hidden_count + 1
         print("{0} datasets hidden".format(hidden_count))
     except Exception as e:
+        logging.exception(e)
         print("An error occurred retrieving network {0}".format( network_id ))
         return
 

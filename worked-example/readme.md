@@ -28,6 +28,9 @@ instead of using 'pip'. This allows us to use avoid intruding on your computer's
     
     #Download all the correct dependencies from the Pipfile.
     #These contain hydra, pywr and the pywr app..
+
+    #This ensures pywr builds with fewer dependencies.
+    >>> export PYWR_BUILD_GLPK=true
     
     >>> pipenv install
     
@@ -49,14 +52,14 @@ When prompted, the default username is 'root' and the password is empty (just hi
 In order to import a Pywr model to Hydra first a template must be registered with Hydra. The Pywr-Hydra application includes functionality to register a template.
 
 ```bash
-    >>> python hydra-pywr register
+    >>> hydra-pywr template register
 ```
 
 # Step 4
 Using the pywr app, upload the network to Hydra. Choose one of the models to run. This uses the simplest one, 'simple1.json'
 
 ```bash
-    >>> python hydra-pywr import ../models/simple1/simple1.json --project-id=<project_id>
+    >>> hydra-pywr import ../models/simple1/simple1.json <project_id>
     Network <network_id> created 
 
     >>> python get_network_details.py --network-id=<network_id>
@@ -79,16 +82,23 @@ Create a second user to test the sharing and security features
 ```
 
 # Step 7
-Share the network with user A, keeping 'costs' hidden.
+Share the network with user 2, keeping 'costs' hidden.
 
 ```bash
     >>> python share_network.py --network-id=<network_id> --recipient-username='user2' --hidden-attribute='cost'
 ```
 
 # Step 8
-Posing as the shared user, inspect results (in this case, simulated_volume) with a simple graph. Enter your login details as prompted.
+Posing as the shared user, inspect results (in this case, simulated_volume) with a simple graph. Enter your login details as prompted. A timeseries should appear. If you're using the simple model, they will all have the same value, resulting in a horizontal line.
 
 ```bash
-    >>> python plot_result.py --scenario-id=<scenario_id> --attribute-name=simulated_flow
+    >>> python plot_results.py --scenario-id=<scenario_id> --attribute-name=simulated_flow
 ```
+# Step 9
+Posing as the shared user, try to access the cost values. Notice that an error occurs, as user2 does
+not have permission to view the value of the cost. *This means that user 2 will be unable to run the model, as the cost value will not be exported.*
 
+```bash
+    >>> python plot_results.py --scenario-id=<scenario_id> --attribute-name=cost
+    >>> An error occurred retrieving scenario 48. Reason: Unable to view value for dataset cost
+```
