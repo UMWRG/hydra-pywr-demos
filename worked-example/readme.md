@@ -1,8 +1,10 @@
 # A worked example running the pywr model through Hydra Platform 
-This is a step-by-step set of instructions for running a simple water resources
- simulation model through Hydra Platform. This uses the 'Hydra-Pywr App'. This app is a software package which, amongts other things, retrieves a network from Hydra Platform, converts it into a Pywr input file, runs the pywr model, and uploads the results back to Hydra Platform. 
+This is a step-by-step set of instructions for running a simulation model through Hydra Platform. 
+This uses the 'Hydra-Pywr App'. This app is a software package which, amongts other things, 
+retrieves a network from Hydra Platform, converts it into a Pywr input file, runs the pywr model, and uploads the results back to Hydra Platform. 
 
-This app requires Hydra Platform to have the Pywr template installed. The template can be added to Hydra Platform using its 'template register' functionality. A template describes to Hydra Platform the types of nodes and links used by the model, and their attributes.
+This app requires Hydra Platform to have the Pywr template installed. The template can be added to Hydra Platform using its 'template register' functionality. 
+A template describes to Hydra Platform the types of nodes and links used by the model, and their attributes.
 
 ## Disclaimer
 This example is broken into multiple scripts for illustration, and does not necessarily reflect how a cliient interaction should be performed.
@@ -49,17 +51,19 @@ When prompted, the default username is 'root' and the password is empty (just hi
 ```
 
 # Step 3
-In order to import a Pywr model to Hydra first a template must be registered with Hydra. The Pywr-Hydra application includes functionality to register a template.
+In order to import a Pywr model to Hydra first a template must be registered with Hydra. 
+The Pywr-Hydra application includes functionality to register a template.
 
 ```bash
     >>> hydra-pywr template register
 ```
 
 # Step 4
-Using the pywr app, upload the network to Hydra. Choose one of the models to run. This uses the simplest one, 'simple1.json'
+Using the pywr app, upload the network to Hydra. Choose one of the models to run.
+This uses a water-energy model, 'water-energy-embed.json'
 
 ```bash
-    >>> hydra-pywr import ../models/simple1/simple1.json <project_id>
+    >>> hydra-pywr import ../models/water-energy-embed/water-energy-embed.json <project_id>
     Network <network_id> created 
 
     >>> python get_network_details.py --network-id=<network_id>
@@ -89,7 +93,9 @@ Share the network with user 2, keeping 'costs' hidden.
 ```
 
 # Step 8
-Posing as the shared user, inspect results (in this case, simulated_volume) with a simple graph. Enter your login details as prompted. A timeseries should appear. If you're using the simple model, they will all have the same value, resulting in a horizontal line.
+Posing as the shared user, inspect results (in this case, simulated_volume) with a graph.
+Enter your login details as prompted.
+A timeseries should appear with the simulated flow of each node which has a simulated_flow attribute. 
 
 ```bash
     >>> python plot_results.py --scenario-id=<scenario_id> --attribute-name=simulated_flow
