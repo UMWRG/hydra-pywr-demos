@@ -1,1 +1,3 @@
-A water-only simulation model with an expansion planning MOEA model
+This is a synthetic water system model. The system includes demands from irrigation and urban water supply along with hydropower generation. The model includes synthetic streamflow boundary conditions over the period 2001 to 2100 for 5 sub-catchments. The system includes two storage reservoirs that are capable of supply both agricultural demands and releases for hydropower generation. Hydropower releases are controlled through  a simple linear control rule. 
+
+The model can also be used to evaluate future capacity expansion of the system via the use of multi-objective optimisation. New infrastructure assets, such as irrigation canals, reservoir and hydropower capacities, can be optimised to find trade-offs between water system deficits and investment cost.
