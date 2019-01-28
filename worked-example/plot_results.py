@@ -31,25 +31,38 @@ def plot_results(scenario_id, attribute_name, username, password):
     for a in all_attributes:
         attribute_id_name_map[a.id] = a.name
     
-    datasets_to_plot = []
+    datasets_to_plot = {}
 
     try:
         #Get all the datasets matching the specified attribute
         scenario = conn.get_scenario(scenario_id=scenario_id)
+
+        network = conn.get_network(network_id=scenario.network_id)
+
+
+        node_ra_map = {}
+
+        for node in network.nodes:
+            for ra in node.attributes:
+                node_ra_map[ra.id] = node.name
+
         for rs in scenario.resourcescenarios:
             #Check the attribute map created above to see if it's the right attribute.
             if attribute_id_name_map[rs.resourceattr.attr_id].lower() == attribute_name.lower():
                 if rs.dataset.value is None:
                     raise Exception("Unable to view value for dataset {0}".format(rs.dataset.name))
-                datasets_to_plot.append(rs.dataset.value)
+                datasets_to_plot[node_ra_map.get(rs.resourceattr.id, rs.resourceattr.id)] = rs.dataset.value
                 
     except Exception as e:
         print("An error occurred retrieving scenario {0}. Reason: {1}".format( scenario_id, e ))
         return
    
-    for d in datasets_to_plot:
-        df = pd.read_json(d)
-        plt.plot(df.index, df.values)
+    df = {}
+    for name, d in datasets_to_plot.items():
+        df[name] = pd.read_json(d).iloc[:,0]
+
+    df = pd.concat(df, axis=1)    
+    df.plot()
 
     plt.show()
 
